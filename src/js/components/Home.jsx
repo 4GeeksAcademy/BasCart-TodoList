@@ -5,7 +5,6 @@ export const Home = () => {
 	let [item, setItem] = useState("")
 	let [listTarea, setListTarea] = useState([])
 	const[hover, setHover]= useState(false);
-	const estilo = { backgroundColor: hover ? "lightgray" : "rgb(248, 249, 250)" }
 	const[counter, setCounter] = useState(0)
 	const add=()=> {setCounter ((prevCounter) => prevCounter + 1)}
 	const sub=()=> {setCounter ((prevCounter) => prevCounter - 1)}
@@ -35,8 +34,21 @@ export const Home = () => {
 			<div>
 				<ul className="list-group" onChange={setCounter}>
 					{listTarea.map((newItem, index) => { 
+						const id = crypto.randomUUID()
+						const activateHover = (evento) => {
+							if (evento.target.id == id){
+								evento.target.style.backgroundColor = "grey"
+								setHover(true)
+							}
+						}
+						const nonHover = (evento) => {
+							if (evento.target.id == id){
+								evento.target.style.backgroundColor = "white"
+								setHover(false)
+							}
+						}
 						return(
-						<li key={crypto.randomUUID()} style={estilo} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}  className="list-group-item d-flex justify-content-between">
+						<li id={id} key={crypto.randomUUID()} onMouseEnter={activateHover} onMouseLeave={nonHover}  className="list-group-item d-flex justify-content-between">
 							{newItem}
 							<button className="btn  " onClick={() =>{
 							deleteItem(index);
