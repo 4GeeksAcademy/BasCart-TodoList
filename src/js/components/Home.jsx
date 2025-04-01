@@ -20,9 +20,14 @@ export const Home = () => {
 			<h1 className="text-center fs-1">TODO</h1>
 			<form onSubmit={(event) => {
 				event.preventDefault()
-				setListTarea([item, ...listTarea])
-				setItem("")
-				add()
+				const trimmedItem = item.trim()
+				if(trimmedItem !== ""){
+					setListTarea([item, ...listTarea])
+					setItem("")
+					add()
+				}else{
+					alert("Please, insert a new Tarea")
+				}
 				
 			}}>
 				<input type="text"
@@ -61,7 +66,8 @@ export const Home = () => {
 					})}
 				</ul>
 			</div>
-			<div className="border rounded">{counter} Pending Tasks</div>
+			{counter === 0 ? <div className="border rounded" style={{width: "100%"}}> &nbsp;You don't have Tareas</div>: null}
+			<div className="border rounded">&nbsp;{counter} Pending Tasks</div>
 		</div>
 	)
 }
